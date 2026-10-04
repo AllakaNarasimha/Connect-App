@@ -9,7 +9,7 @@ resources:
     - repository: templates
       type: git
       name: Pipeline-Templates/Pipeline-Templates
-      ref: refs/heads/test/angular-pnpm-template-update
+      ref: refs/heads/main
       endpoint: Pipeline-Templates-Connection
 
 variables:
@@ -48,16 +48,12 @@ stages:
     # ============================================================
     # DEVELOPMENT
     #
-    # TEMPORARY FOR VALIDATION:
-    # Allows test/pipeline-template-validation to deploy to Dev.
-    #
-    # Change to false after validation and before final merge.
+    # Only master deploys to Development.
     # ============================================================
 
-    allowNonMasterDeploy: true
+    allowNonMasterDeploy: false
 
     devEnvironmentName: 'Development'
-
     devVariableGroup: 'Connect-App-Deployment'
     devStaticWebAppTokenVariable: 'STATIC_WEB_APP_DEV_TOKEN'
     devStaticWebAppEnvironment: 'dev'
@@ -65,9 +61,7 @@ stages:
     # ============================================================
     # PRODUCTION
     #
-    # Deployment is restricted to release/* by prod-template.yml.
-    # Empty SWA environment means the default Production
-    # environment.
+    # release/* deploys to Production.
     # ============================================================
 
     prodEnvironmentName: 'Production'
