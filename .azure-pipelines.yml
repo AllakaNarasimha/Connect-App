@@ -1,0 +1,70 @@
+trigger:
+  branches:
+    include:
+      - master
+      - release/*
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: Pipeline-Templates/Pipeline-Templates
+      ref: refs/heads/main
+      endpoint: Pipeline-Templates-Connection
+
+variables:
+  - name: sourceBranchShort
+    value: $(Build.SourceBranchName)
+
+  - name: sourceVersionMessage
+    value: $(Build.SourceVersionMessage)
+
+stages:
+- template: master-deploy.yml@templates
+  parameters:
+    # ============================================================
+    # APPLICATION
+    # ============================================================
+
+    techStack: 'angular-pnpm'
+    appName: 'Connect-App'
+
+    # ============================================================
+    # NX / PNPM
+    # ============================================================
+
+    nxProject: 'connect-app'
+    pnpmVersion: '10.23.0'
+    nodeVersion: '20.x'
+
+    # ============================================================
+    # SOURCE
+    # ============================================================
+
+    sourceBranch: '$(Build.SourceBranch)'
+    sourceBranchShort: '$(sourceBranchShort)'
+    sourceVersionMessage: '$(sourceVersionMessage)'
+
+    # ============================================================
+    # DEVELOPMENT
+    #
+    # Only master deploys to Development.
+    # ============================================================
+
+    allowNonMasterDeploy: false
+
+    devEnvironmentName: 'Development'
+    devVariableGroup: 'Connect-App-Deployment'
+    devStaticWebAppTokenVariable: 'STATIC_WEB_APP_DEV_TOKEN'
+    devStaticWebAppEnvironment: 'dev'
+
+    # ============================================================
+    # PRODUCTION
+    #
+    # release/* deploys to Production.
+    # ============================================================
+
+    prodEnvironmentName: 'Production'
+    prodVariableGroup: 'Connect-App-Deployment'
+    prodStaticWebAppTokenVariable: 'STATIC_WEB_APP_PROD_TOKEN'
+    prodStaticWebAppEnvironment: ''
