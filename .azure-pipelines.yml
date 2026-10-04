@@ -1,0 +1,34 @@
+trigger:
+  branches:
+    include:
+      - master
+      - release/*
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: Pipeline-Templates/Pipeline-Templates
+      ref: refs/heads/main
+      endpoint: Pipeline-Templates-Connection
+
+variables:
+  - name: sourceBranchShort
+    value: $(Build.SourceBranchName)
+
+  - name: sourceVersionMessage
+    value: $(Build.SourceVersionMessage)
+
+  - name: allowNonMasterDeploy
+    value: 'false'
+
+stages:
+- template: master-deploy.yml@templates
+  parameters:
+    techStack: 'angular'
+    appName: 'Connect-App'
+    sourceBranch: '$(Build.SourceBranch)'
+    sourceBranchShort: '$(sourceBranchShort)'
+    sourceVersionMessage: '$(sourceVersionMessage)'
+    allowNonMasterDeploy: false
+    nodeVersion: '20.x'
