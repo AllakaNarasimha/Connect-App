@@ -46,11 +46,12 @@ stages:
     sourceVersionMessage: '$(sourceVersionMessage)'
 
     # ============================================================
-    # DEV DEPLOYMENT
+    # DEVELOPMENT
     #
-    # TEMPORARY:
+    # TEMPORARY FOR VALIDATION:
     # Allows test/pipeline-template-validation to deploy to Dev.
-    # Change back to false after validation.
+    #
+    # Change to false after validation and before final merge.
     # ============================================================
 
     allowNonMasterDeploy: true
@@ -64,8 +65,9 @@ stages:
     # ============================================================
     # PRODUCTION
     #
-    # Production remains protected by the release/* condition
-    # inside prod-template.yml.
+    # Deployment is restricted to release/* by prod-template.yml.
+    # Empty SWA environment means the default Production
+    # environment.
     # ============================================================
 
     prodEnvironmentName: 'Production'
