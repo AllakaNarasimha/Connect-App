@@ -69,3 +69,6 @@ stages:
     # ============================================================
 
     prodEnvironmentName: 'Production'
+    prodVariableGroup: 'Connect-App-Deployment'
+    prodStaticWebAppTokenVariable: 'STATIC_WEB_APP_PROD_TOKEN'
+    prodStaticWebAppEnvironment: ''
