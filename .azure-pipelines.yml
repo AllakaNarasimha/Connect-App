@@ -9,7 +9,7 @@ resources:
     - repository: templates
       type: git
       name: Pipeline-Templates/Pipeline-Templates
-      ref: refs/heads/main
+      ref: refs/heads/test/angular-pnpm-template-update
       endpoint: Pipeline-Templates-Connection
 
 variables:
@@ -25,10 +25,17 @@ variables:
 stages:
 - template: master-deploy.yml@templates
   parameters:
-    techStack: 'angular'
+    techStack: 'angular-pnpm'
     appName: 'Connect-App'
+
+    # Nx / pnpm configuration
+    nxProject: 'connect-app'
+    pnpmVersion: '10.23.0'
+    nodeVersion: '20.x'
+
     sourceBranch: '$(Build.SourceBranch)'
     sourceBranchShort: '$(sourceBranchShort)'
     sourceVersionMessage: '$(sourceVersionMessage)'
+
+    # Test branch should build only — no deployment
     allowNonMasterDeploy: false
-    nodeVersion: '20.x'
