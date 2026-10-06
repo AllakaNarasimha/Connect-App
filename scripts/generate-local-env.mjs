@@ -11,8 +11,6 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const outDirConfigs = join(__dirname, '..', 'apps', 'connect-app', 'public', 'assets', 'configs');
 const outFileConfigs = join(outDirConfigs, 'env.js');
-const outDirRoot = join(__dirname, '..', 'apps', 'connect-app', 'public', 'assets');
-const outFileRoot = join(outDirRoot, 'env.js');
 
 const localEnvironment = {
   environmentName: 'local',
@@ -25,18 +23,10 @@ const localEnvironment = {
 };
 
 mkdirSync(outDirConfigs, { recursive: true });
-mkdirSync(outDirRoot, { recursive: true });
 writeFileSync(
   outFileConfigs,
   `window['__connect-app-env'] = ${JSON.stringify(localEnvironment, null, 2)};\n`,
 );
 
-// also write the simpler public runtime config used by the app at assets/env.js
-const publicEnv = {
-  environment: 'local',
-  apiEndpoint: localEnvironment.apiEndpoint,
-};
-writeFileSync(outFileRoot, `window.__env = ${JSON.stringify(publicEnv, null, 2)};\n`);
-
 // eslint-disable-next-line no-console
-console.log(`Wrote local runtime environment to ${outFileConfigs} and ${outFileRoot}`);
+console.log(`Wrote local runtime environment to ${outFileConfigs}`);
