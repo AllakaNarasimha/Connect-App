@@ -67,15 +67,18 @@ export function loadEnvironment<TEnvironment extends AppEnvironment>(
     }
   }
 
-  return new Proxy({} as TEnvironment & { environmentInitializationFailed: boolean }, {
-    get(_, propertyName) {
-      if (propertyName === 'environmentInitializationFailed') {
-        return true;
-      }
-
-      throw new Error('Environment Initialization Failed');
-    },
-  });
+  // Fallback: return a safe, non-throwing environment object marked as failed.
+  // This prevents runtime exceptions when the runtime `env.js` is missing
+  // (for example, if the deployment/publish pipeline didn't generate it).
+  return {
+    environmentInitializationFailed: true,
+    production: angularProductionMode,
+    environmentName: 'unknown',
+    apiEndpoint: '',
+    version: buildVersion,
+    isDevEnvironment: false,
+    isLocalEnvironment: false,
+  } as unknown as TEnvironment & { environmentInitializationFailed: boolean };
 }
 
 function validateAppEnvironment(
