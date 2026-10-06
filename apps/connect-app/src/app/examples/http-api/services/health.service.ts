@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { fetchFnWithState } from '@connect-app/shared';
-import { runtimeEnvironment } from '../../core/config/runtime-environment';
+import { runtimeEnvironment } from '../../../core/config/runtime-environment';
 
 @Injectable({ providedIn: 'root' })
 export class HealthService {
