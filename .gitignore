@@ -46,3 +46,6 @@ Thumbs.db
 .angular
 
 __screenshots__/
+
+# Generated local-dev runtime environment config (run `node scripts/generate-local-env.mjs`)
+apps/connect-app/public/assets/configs/env.js

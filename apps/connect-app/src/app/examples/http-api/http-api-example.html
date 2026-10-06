@@ -1,0 +1,24 @@
+<section class="http-api-example">
+  <header class="http-api-example__header">
+    <h2>HTTP API sample</h2>
+    <button type="button" (click)="refresh()" [disabled]="busy()">Refresh</button>
+  </header>
+
+  <nav class="http-api-example__nav">
+    <a href="/http-api-example/health">Check API health</a>
+  </nav>
+
+  @if (prefetch() || busy()) {
+    <p>Loading todos…</p>
+  } @else if (ok()) {
+    <ul>
+      @for (todo of todos(); track todo.id) {
+        <li [class.completed]="todo.completed">{{ todo.title }}</li>
+      }
+    </ul>
+  } @else if (errorStatus()) {
+    <p class="http-api-example__error">Request failed with status {{ errorStatus() }}.</p>
+  } @else {
+    <p class="http-api-example__error">Request failed. Check the console for details.</p>
+  }
+</section>
