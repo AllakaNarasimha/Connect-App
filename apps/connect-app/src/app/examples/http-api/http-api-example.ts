@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { TodoApiService } from './services/todo-api.service';
 
 @Component({
   selector: 'app-http-api-example',
+  imports: [RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './http-api-example.html',
   styleUrl: './http-api-example.scss',
