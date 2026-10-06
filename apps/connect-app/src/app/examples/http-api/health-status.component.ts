@@ -65,7 +65,11 @@ export class HealthStatusComponent {
   readonly res = computed(() => this.state().okRes);
   readonly errorStatus = computed(() => this.state().errorRes?.status);
 
-  check(): void {
-    void this.#service.checkHealth();
+  async check(): Promise<void> {
+    const state = await this.#service.checkHealth();
+
+    console.log('Health fetch state:', state);
+    console.log('Health HttpResponse:', state.okRes);
+    console.log('Health body:', state.okRes?.body);
   }
 }
